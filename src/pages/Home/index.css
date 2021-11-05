@@ -1,0 +1,86 @@
+.login-btn {
+  position: absolute;
+  right: 0;
+  margin: 10px 70px 0 70px;
+  background: #2aa3a3;
+  color: white;
+  padding: 7px 22px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+
+.left-wrapper {
+  position: absolute;
+  margin: 10px 0 0 30px;
+  font-size: 14px;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  font-size: 14px;
+  width: 400px;
+  
+}
+.search-input {
+  /* position: absolute; */
+  width: 100%;
+  border-radius: 12px;
+  padding: 12px 10px 12px 20px;
+  border: 0;
+  color: #9e9999;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #acacac;
+}
+
+.search-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+}
+
+/* Geocoder Styles */
+
+.react-geocoder {
+  position: absolute;
+  top: 0;
+  z-index: 99;
+}
+
+/*  Marker Styles */
+
+
+.marker {
+  width:0;
+  height:0;
+}
+
+.marker  span {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-sizing:border-box;
+  width: 30px;
+  height: 30px;
+  color:#fff;
+  background: #4D2D73;
+  border:solid 2px;
+  border-radius: 0 70% 70%;
+  box-shadow:0 0 2px #000;
+  cursor: pointer;
+  transform-origin:0 0;
+  transform: rotateZ(-135deg);
+}
+
+.marker b {
+  transform: rotateZ(135deg)
+}
+
+.temporary-marker span {
+  background: #029aff;
+}
