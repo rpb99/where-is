@@ -84,3 +84,7 @@
 .temporary-marker span {
   background: #029aff;
 }
+
+.index{
+  z-index: 99;
+}

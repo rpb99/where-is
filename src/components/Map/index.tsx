@@ -7,6 +7,7 @@ import ReactMapGL, {
   ScaleControl,
   Source,
   Layer,
+  Popup,
 } from "react-map-gl";
 import React, { useEffect, useState } from "react";
 import { url } from "inspector";
@@ -72,14 +73,28 @@ const Map: React.FC = () => {
           <div
             className=""
             style={{
-              width: "32px",
-              height: "32px",
+              width: "20px",
+              height: "20px",
               borderRadius: "100%",
-              backgroundImage: "url(https://placekitten.com/g/600/700)",
+              backgroundImage: `url(https://placekitten.com/g/${Math.round(
+                idx + 700
+              )}/600`,
               backgroundSize: "100%",
             }}
           >
-            <span></span>
+            {viewport.zoom > 11 && (
+              <div
+                style={{
+                  color: "#2e2e2e",
+                  fontSize: 11,
+                  position: "absolute",
+                  top: 25,
+                  left: -10,
+                }}
+              >
+                {marker.name}
+              </div>
+            )}
           </div>
         </Marker>
       ))}
@@ -87,7 +102,8 @@ const Map: React.FC = () => {
   );
 
   const onClicked = (lngLat: number[]) => {
-    setTempMarker({ longitude: lngLat[0], latitude: lngLat[1] });
+    setTempMarker({ name: "Gmo", longitude: lngLat[0], latitude: lngLat[1] });
+    console.log(viewport.zoom);
   };
   const onSelected = (viewport: IViewport, item: any) => {
     setViewport(viewport);
@@ -102,6 +118,21 @@ const Map: React.FC = () => {
         name: item.place_name,
         longitude: item.center[0],
         latitude: item.center[1],
+      },
+    ]);
+  };
+
+  const onClose = () => {
+    setTempMarker({});
+  };
+
+  const addMarker = () => {
+    setMarkers((prevState: any) => [
+      ...prevState,
+      {
+        name: "warunkQ",
+        longitude: tempMarker.longitude,
+        latitude: tempMarker.latitude,
       },
     ]);
   };
@@ -123,16 +154,34 @@ const Map: React.FC = () => {
         onViewportChange={(viewport: IViewport) => setViewport(viewport)}
         onClick={({ lngLat }) => onClicked(lngLat)}
       >
-        {/* Marker when clicked */}
         {Object.keys(tempMarker).length && (
-          <Marker
-            longitude={tempMarker.longitude}
-            latitude={tempMarker.latitude}
-          >
-            <div className="marker temporary-marker">
-              <span></span>
-            </div>
-          </Marker>
+          <>
+            {/* Marker when clicked */}
+            <Marker
+              longitude={tempMarker.longitude}
+              latitude={tempMarker.latitude}
+              className="index"
+            >
+              <div className="marker temporary-marker">
+                <span></span>
+              </div>
+            </Marker>
+
+            {/* Popup when map clicked */}
+            <Popup
+              latitude={tempMarker.latitude}
+              longitude={tempMarker.longitude}
+              onClose={onClose}
+              closeButton={true}
+              closeOnClick={false}
+              offsetTop={-30}
+              className="index"
+            >
+              <p style={{ zIndex: 99 }} onClick={addMarker}>
+                Add this place
+              </p>
+            </Popup>
+          </>
         )}
 
         {/* render all markers */}
